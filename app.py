@@ -7,7 +7,6 @@ app = Flask(__name__)
 key = Fernet.generate_key()
 
 
-
 host = 'localhost'
 port = 5433
 dbname = 'usersdb'
@@ -24,7 +23,15 @@ def get_connection():
 
 @app.get('/api/users')
 def get_users():
-    return 'Gettings users'
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=extras.RealDictCursor)
+
+    cur.execute('SELECT * FROM users')
+    users = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    return jsonify(users)
 
 
 @app.post('/api/users')
@@ -33,7 +40,6 @@ def create_user():
     username = new_user['username']
     email = new_user['email']
     password = Fernet(key).encrypt(bytes(new_user['password'], 'utf-8'))
-    
 
     conn = get_connection()
     cur = conn.cursor(cursor_factory=extras.RealDictCursor)
@@ -44,7 +50,6 @@ def create_user():
     conn.commit()
     cur.close()
     conn.close()
-    
 
     return jsonify(new_created_user)
 
@@ -59,9 +64,19 @@ def update_user():
     return 'Updating user'
 
 
-@app.get('/api/users/1')
-def get_user():
-    return 'Getting user'
+@app.get('/api/users/<id>')
+def get_user(id):
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=extras.RealDictCursor)
+
+    cur.execute('SELECT * FROM users WHERE id = %s', (id,))
+    user = cur.fetchone()
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    cur.close()
+    conn.close()
+    return jsonify(user)
 
 
 if __name__ == '__main__':
