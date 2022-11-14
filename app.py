@@ -54,9 +54,25 @@ def create_user():
     return jsonify(new_created_user)
 
 
-@app.delete('/api/users/1')
-def delete_user():
-    return 'Deleting user'
+@app.delete('/api/users/<id>')
+def delete_user(id):
+    conn = get_connection()
+    cur = conn.cursor(cursor_factory=extras.RealDictCursor)
+    
+    cur.execute('DELETE FROM users WHERE id = %s RETURNING *', (id,))
+    user = cur.fetchone()
+    conn.commit()
+    conn.close()
+    cur.close()
+    
+    if user is None:
+      return jsonify({'message': 'User not found'}), 404
+  
+    return  jsonify(user)
+
+
+  
+  
 
 
 @app.put('/api/users/1')
