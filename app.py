@@ -1,17 +1,24 @@
 from flask import Flask, request, jsonify
 from psycopg2 import connect, extras
 from cryptography.fernet import Fernet
+from dotenv import load_dotenv
+from os import environ
+
+
+load_dotenv()
+
+
 
 
 app = Flask(__name__)
 key = Fernet.generate_key()
 
 
-host = 'localhost'
-port = 5433
-dbname = 'usersdb'
-username = 'postgres'
-pasword = 'marioposada'
+host = environ.get('DB_HOST')
+port = environ.get('DB_PORT')
+dbname = environ.get('DB_NAME')
+username = environ.get('DB_USER')
+pasword = environ.get('DB_PASSWORD')
 
 
 def get_connection():
