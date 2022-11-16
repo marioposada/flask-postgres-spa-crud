@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
-
+import { Link, useNavigate } from "react-router-dom";
 
 const EmpListing = () => {
   const [empdata, setEmpdata] = useState([]);
 
+  const navigate = useNavigate();
+
   const LoadDetail = (id) => {
+    navigate("/users/detail/" + id);
+  };
 
-  }
+  const LoadEdit = (id) => {};
 
-  const LoadEdit = (id) => {
-
-  }
-
-  const LoadRemove = (id) => {
-
-  }
+  const LoadRemove = (id) => {};
 
   useEffect(() => {
     const request = async (url) => {
@@ -38,7 +34,9 @@ const EmpListing = () => {
         </div>
         <div className="card-body">
           <div className="divbtn">
-            <Link to='users/create' className="btn btn-success">Add New User (+) </Link>
+            <Link to="users/create" className="btn btn-success">
+              Add New User (+){" "}
+            </Link>
           </div>
           <table className="table table-bordered">
             <thead className="bg-dark text-white">
@@ -59,9 +57,30 @@ const EmpListing = () => {
                     <td>{item.email}</td>
                     <td>{item.created_at}</td>
                     <td>
-                      <a onClick={()=>{LoadEdit(item.id)}} className="btn btn-success">Edit</a>
-                      <a onClick={()=>{LoadRemove(item.id)}} className="btn btn-danger">Remove</a>
-                      <a onClick={()=>{LoadDetail(item.id)}} className="btn btn-primary">Details</a>
+                      <a
+                        onClick={() => {
+                          LoadEdit(item.id);
+                        }}
+                        className="btn btn-success"
+                      >
+                        Edit
+                      </a>
+                      <a
+                        onClick={() => {
+                          LoadRemove(item.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        Remove
+                      </a>
+                      <a
+                        onClick={() => {
+                          LoadDetail(item.id);
+                        }}
+                        className="btn btn-primary"
+                      >
+                        Details
+                      </a>
                     </td>
                   </tr>
                 ))}
