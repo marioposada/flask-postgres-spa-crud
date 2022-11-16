@@ -14,26 +14,25 @@ const EmpCreate = () => {
 
     console.log({ username, email, password });
 
-  (async () => {
+    (async () => {
       const response = await fetch("http://127.0.0.1:3001/api/users", {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-          },
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           username: username,
           email: email,
           password: password,
         }),
       });
-if (!response.ok) console.log(response);
+      if (!response.ok) console.log(response);
       const data = await response.json();
-      console.log("User saved", data);
+      alert("User saved");
       navigate("/");
-    
-  })();
-  }
+    })();
+  };
   return (
     <div>
       <div className="row">

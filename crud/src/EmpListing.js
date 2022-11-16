@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const initialState = {
-  id: 4,
-};
+
 
 const EmpListing = () => {
   const [empdata, setEmpdata] = useState([]);
+
+  const LoadDetail = (id) => {
+
+  }
+
+  const LoadEdit = (id) => {
+
+  }
+
+  const LoadRemove = (id) => {
+
+  }
 
   useEffect(() => {
     const request = async (url) => {
@@ -49,9 +59,9 @@ const EmpListing = () => {
                     <td>{item.email}</td>
                     <td>{item.created_at}</td>
                     <td>
-                      <a className="btn btn-success">Edit</a>
-                      <a className="btn btn-danger">Remove</a>
-                      <a className="btn btn-primary">Details</a>
+                      <a onClick={()=>{LoadEdit(item.id)}} className="btn btn-success">Edit</a>
+                      <a onClick={()=>{LoadRemove(item.id)}} className="btn btn-danger">Remove</a>
+                      <a onClick={()=>{LoadDetail(item.id)}} className="btn btn-primary">Details</a>
                     </td>
                   </tr>
                 ))}
