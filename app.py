@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 from psycopg2 import connect, extras
 from cryptography.fernet import Fernet
 from os import environ
@@ -8,6 +9,8 @@ load_dotenv()
 
 app = Flask(__name__)
 key = Fernet.generate_key()
+
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 host = environ.get('DB_HOST')
 database = environ.get('DB_NAME')
@@ -106,4 +109,4 @@ def home():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=3000)
+    app.run(debug=True, port=3001)
