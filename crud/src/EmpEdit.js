@@ -30,21 +30,20 @@ const EmpEdit = () => {
     e.preventDefault();
 
     const empdata = { email, username, password };
-   
 
     (async () => {
       const response = await fetch(`http://127.0.0.1:3001/api/users/${empid}`, {
         method: "PUT",
         headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(empdata),
       });
       if (!response.ok) console.log(response);
-      const data = await response.json();
+
       alert("User saved");
-      //   navigate("/");
+      navigate("/");
     })();
   };
 
@@ -89,7 +88,7 @@ const EmpEdit = () => {
                       ></input>
                     </div>
                   </div>
-                  
+
                   <div className="col-lg-12">
                     <div className="form-group">
                       <button type="submit" className="btn btn-success">

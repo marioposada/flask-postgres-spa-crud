@@ -14,7 +14,22 @@ const EmpListing = () => {
     navigate("/users/edit/" + id);
   };
 
-  const LoadRemove = (id) => {};
+  const LoadRemove = (id) => {
+    if(window.confirm('Do you want to remove ?')) {
+    const request = async (url) => {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("WARN", response.status);
+      window.location.reload()
+    };
+
+    request("http://127.0.0.1:3001/api/users/" + id);
+  };}
 
   useEffect(() => {
     const request = async (url) => {
