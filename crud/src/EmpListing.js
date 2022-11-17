@@ -10,7 +10,9 @@ const EmpListing = () => {
     navigate("/users/detail/" + id);
   };
 
-  const LoadEdit = (id) => {};
+  const LoadEdit = (id) => {
+    navigate("/users/edit/" + id);
+  };
 
   const LoadRemove = (id) => {};
 

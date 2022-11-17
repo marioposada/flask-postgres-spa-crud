@@ -10,7 +10,7 @@ load_dotenv()
 app = Flask(__name__)
 key = Fernet.generate_key()
 
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={"/*": {"origins": "http://127.0.0.1:3001"}})
 
 host = environ.get('DB_HOST')
 database = environ.get('DB_NAME')
